@@ -145,10 +145,7 @@ will look like this:
 │                         the creator's GH username, and a short `-` delimited description, e.g.
 │                         `1.0-wfondrie-initial-data-exploration`.
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── results            <- Generated analyses, such as figures and reports.
 │
 ├── environment.yml    <- Specifies the dependencies to build a conda environment.
 │                         Create the environment with `conda env create -f environment.yml`
@@ -160,22 +157,14 @@ will look like this:
 ├── setup.py           <- Makes project pip installable (pip install -e .) so src can be imported
 │
 └── src                <- Source code for use in this project.
-    ├── __init__.py    <- Makes src a Python module
-    │
-    ├── data           <- Scripts to download or generate data
-    │   └── make_dataset.py
-    │
-    ├── models         <- Scripts to train models to make predictions
-    │   ├── predict_model.py
-    │   └── train_model.py
-    │
-    └── visualization  <- Scripts to create visualizations
-        └── visualize.py
+    └── __init__.py    <- Makes src a Python module
 ```
 
 Feel free to modify these directories and files as best fits your needs. For
 example, if your project does not use Python, you may want to remove a few
 files: `pyproject.toml`, `setup.cfg`, `setup.py`, and `src/__init__.py`.
+
+Now go forth and do cool things!
 
 ## Tips and Tricks
 
@@ -230,5 +219,3 @@ To enable Black, run from the root of your project:
 ``` bash
 $ pre-commit install
 ```
-
-Now go forth and do cool things!
