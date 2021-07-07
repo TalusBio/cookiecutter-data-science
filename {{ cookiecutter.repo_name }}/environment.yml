@@ -1,0 +1,23 @@
+name: {{ cookiecutter.repo_name }}
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  # For the template:
+  - python>=3.6
+  - pip
+  - click
+  - awscli
+  - flake8
+  - python-dotenv>=0.5.1
+  - pip:
+      - -e . # Our local package
+
+  # Data Science Packages
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
