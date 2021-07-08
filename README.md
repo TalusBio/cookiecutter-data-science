@@ -119,7 +119,7 @@ $ conda install cookiecutter
 To start a new data science project first run:
 
 ``` bash
-$ cookiecutter git@github.com:TalusBio/cookiecutter-data-science
+$ cookiecutter https://github.com/TalusBio/cookiecutter-talus-data-science
 ```
 
 After running the command you will be directed through a series of prompts to
