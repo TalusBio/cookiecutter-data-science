@@ -8,8 +8,9 @@ CCDS_ROOT = Path(__file__).parents[1].resolve()
 
 args = {
     "project_name": "TalusBio",
-    "author_name": "TalusBio",
+    "author_name": "Will",
     "open_source_license": "BSD-3-Clause",
+    "install_data_science_pkgs": "no",
 }
 
 

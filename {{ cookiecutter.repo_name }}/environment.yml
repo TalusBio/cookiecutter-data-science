@@ -15,9 +15,11 @@ dependencies:
   - pip:
       - -e . # Our local package
 
+{% if cookiecutter.install_data_science_pkgs == "yes" %}
   # Data Science Packages
   - numpy
   - pandas
   - matplotlib
   - seaborn
   - scikit-learn
+{% endif %}

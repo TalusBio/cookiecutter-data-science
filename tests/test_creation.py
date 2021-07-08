@@ -2,6 +2,17 @@ import os
 import pytest
 from subprocess import check_output
 from conftest import system_check
+from contextlib import contextmanager
+
+
+@contextmanager
+def cwd(path):
+    oldpwd = os.getcwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(oldpwd)
 
 
 def no_curlies(filepath):
@@ -19,6 +30,13 @@ def no_curlies(filepath):
 
 @pytest.mark.usefixtures("default_baked_project")
 class TestCookieSetup(object):
+    def check(self, arg):
+        args = ["python", "setup.py", "--" + str(arg)]
+        with cwd(self.path):
+            p = check_output(args).decode("ascii").strip()
+
+        return p
+
     def test_project_name(self):
         project = self.path
         if pytest.param.get("project_name"):
@@ -28,11 +46,9 @@ class TestCookieSetup(object):
             assert project.name == "project_name"
 
     def test_author(self):
-        setup_ = self.path / "setup.py"
-        args = ["python", str(setup_), "--author"]
-        p = check_output(args).decode("ascii").strip()
+        p = self.check("author")
         if pytest.param.get("author_name"):
-            assert p == "TalusBio"
+            assert p == "Will"
         else:
             assert p == "Your name (or your organization/company/team)"
 
@@ -45,9 +61,7 @@ class TestCookieSetup(object):
                 assert "TalusBio" == next(fin).strip()
 
     def test_setup(self):
-        setup_ = self.path / "setup.py"
-        args = ["python", str(setup_), "--version"]
-        p = check_output(args).decode("ascii").strip()
+        p = self.check("version")
         assert p == "0.1.0"
 
     def test_license(self):
@@ -56,9 +70,7 @@ class TestCookieSetup(object):
         assert no_curlies(license_path)
 
     def test_license_type(self):
-        setup_ = self.path / "setup.py"
-        args = ["python", str(setup_), "--license"]
-        p = check_output(args).decode("ascii").strip()
+        p = self.check("license")
         if pytest.param.get("open_source_license"):
             assert p == "BSD-3"
         else:

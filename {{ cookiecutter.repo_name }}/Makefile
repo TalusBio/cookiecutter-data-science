@@ -1,4 +1,4 @@
-.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+.PHONY: clean data lint env sync_data_to_s3 sync_data_from_s3
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -15,14 +15,14 @@ PYTHON_INTERPRETER = "python3"
 #################################################################################
 
 ## Install Dependencies
-environment: environment.yml
-	if $(conda env list | grep -q ${PROJECT_NAME}); then
-		conda env create -f environment.yml
-		@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-	else
-		conda env update -n ${PROJECT_NAME} -f environement.yml --prune
-		@echo ">>> Updated conda env. Activate with:\nconda activate $(PROJECT_NAME)"
-	endif
+env: environment.yml
+ifeq ($(conda env list | grep "${PROJECT_NAME})",)
+	conda env create -f environment.yml
+	@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
+else
+	conda env update -n ${PROJECT_NAME} -f environment.yml --prune
+	@echo ">>> Updated conda env. Activate with:\nconda activate $(PROJECT_NAME)"
+endif
 
 ## Delete all compiled Python files
 clean:
