@@ -43,33 +43,34 @@ versions of the data can be saved alongside the original, if needed.
 
 Notebook packages like the Jupyter notebook and other literate programming
 tools are very effective for exploratory data analysis. However, these tools
-can be less effective for reproducing an analysis. When we use notebooks in our
-work, we often subdivide the notebooks folder. For example,
-`notebooks/exploratory` contains initial explorations, whereas
-`notebooks/reports` is more polished work that can be exported as html to the
-reports directory.
-
-Since notebooks are challenging objects for source control (e.g., diffs of the
-json are often not human-readable and merging is near impossible), we
-recommended not collaborating directly with others on Jupyter notebooks. There
-are two steps we recommend for using notebooks effectively:
+can be less effective for reproducing an analysis. Since notebooks are
+challenging objects for source control (e.g., diffs of the json are often not
+human-readable and merging is near impossible), we recommended not
+collaborating directly with others on Jupyter notebooks. There are three steps
+we recommend for using notebooks effectively:
 
 - Follow a naming convention that shows the owner and the order the analysis
-  was done in. We recommend the format `<step>-<ghuser>-<description>.ipynb`
-  (e.g., `0.3-bull-visualize-distributions.ipynb`).
+  was done in. We recommend the format `<step>_<ghuser>_<description>.ipynb`
+  (e.g., `0.3_wfondrie_visualize-distributions.ipynb`).
 
 - Refactor the good parts. Don't write code to do the same task in multiple
   notebooks. If it's a data preprocessing task, put it in the pipeline at
   `src/data/make_dataset.py` and load data from data/interim. If it's useful
   utility code, refactor it to `src`.
+  
+- We like to use subdirectories to divide different types of analyses,
+  particularly for projects that take place over longer periods of time. We
+  recommend the format `<date>_<ghuser>_<description>` for these directories
+  (e.g., `2021-07-08_wfondrie_exporatory-analyses`).
+
 
 ### Data analysis is non-linear
 
 We try many things that work and even more that don't. Additionally, we often
 have long running tasks that don't need to run again unless their dependencies
-change. We can think of the tasks in a data analysis as a directed acyclic
-graph (DAG), where each task has some defined set of dependencies and an output
-which other tasks may depend on.
+change. Thus, we can think of the tasks in a data analysis as a directed
+acyclic graph (DAG), where each task has some defined set of dependencies and
+an output which other tasks may depend on.
 
 So how can we make the final analysis reproducible? We like to use GNU `make`. 
 The `make` utility is common on MacOS and Linux systems and describes the 
@@ -98,21 +99,19 @@ analysis.
    [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
  - [Cookiecutter](http://cookiecutter.readthedocs.org/en/latest/installation.html) >=
    1.4.0
- - [Black](https://black.readthedocs.io/en/stable/) (optional)
- - [pre-commit](https://pre-commit.com/) (optional)
    
  This can be installed with pip by or conda depending on how you
  manage your Python packages:
 
 ``` bash
-$ pip install cookiecutter black pre-commit
+$ pip install cookiecutter
 ```
 
 or
 
 ``` bash
 $ conda config --add channels conda-forge
-$ conda install cookiecutter black pre-commit
+$ conda install cookiecutter
 ```
 
 ## Starting a new project:
@@ -168,18 +167,30 @@ Now go forth and do cool things!
 
 ## Tips and Tricks
 
-### The `src` directory works like a Python package!
+### Setting up your environment
 
-The default files we include allow the `src` directory to be installed with
-`pip`. From the root of your new project directory run the following create an 
-editable install:
+First make sure that your `environment.yml` contains the tools you need for
+your analysis. The `Makefile` included in the repository already contains
+the rules to create or update the environment for your project, based on 
+the `environment.yml`. From the root of your project, run:
 
 ``` bash
-$ pip install -e .
+$ make env
 ```
 
-Once installed, you can use functions and classes defined in `src` within
-your notebooks! For example:
+Then go ahead and activate your new environment, replacing `{project name}` 
+with the name of your project:
+
+``` bash
+$ conda activate {project name}
+```
+
+### The `src` directory works like a Python package!
+
+The default files we include allow the `src` directory to work like a Python
+package. If you've installed and activate you're environment above, then its
+ready to go! You can now use the functions and classes defined in `src` within
+your Jupyter notebooks:
 
 ``` jupyter-notebook
 # OPTIONAL: Load the "autoreload" extension so that code can change
@@ -191,23 +202,7 @@ your notebooks! For example:
 from src.data import make_dataset
 ```
 
-### Setting up your environment
-
-First make sure that your `environment.yml` contains the tools you need for
-your analysis. A conda environment with these tools can be created using:
-
-``` bash
-$ conda env create -f environment.yml
-```
-
-Then go ahead and activate your new environment, replacing `<project name>` 
-with the name of your project:
-
-``` bash
-$ conda activate <project name>
-```
-
-### Enabling code formatting with black
+### Enable Python code formatting with black
 
 [Black](https://black.readthedocs.io/en/stable/) is a Python code formatting
 tool that helps us maintain uniform code formats throughout our projects.
