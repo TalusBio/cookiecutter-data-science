@@ -1,4 +1,4 @@
-name: {{ cookiecutter.repo_name }}
+prefix: ./envs
 channels:
   - conda-forge
   - bioconda

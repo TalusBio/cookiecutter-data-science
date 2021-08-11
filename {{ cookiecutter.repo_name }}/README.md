@@ -8,36 +8,25 @@
 ├── LICENSE
 ├── Makefile           <- Makefile with commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
+├── data               <- The original, immutable data.
 ├── docs               <- Manuscript drafts, presentations, etc.
-│
-├── models             <- Trained and serialized models.
-│
 ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
 │                         the creator's GH username, and a short `-` delimited description, e.g.
 │                         `1.0-wfondrie-initial-data-exploration`.
-│
 ├── results            <- Generated analyses, such as figures and reports.
-│
 ├── environment.yml    <- Specifies the dependencies to build a conda environment.
 │                         Create the environment with `conda env create -f environment.yml`
-│
 ├── pyproject.toml     <- Specifies Python build tools and setttings (flake8, black, etc.)
-│
 ├── setup.cfg          <- Defines metadata about the project. 
-│
 ├── setup.py           <- Makes project pip installable (pip install -e .) so src can be imported
-│
-└── src                <- Source code for use in this project.
-    └── __init__.py    <- Makes src a Python module
+├── src                <- Source code for use in this project.
+│   └── __init__.py    <- Makes src a Python module
+└── .env               <- Define sensitive environment variables. This is intentionally 
+                          ignored by git by default. Do not commit this file!
 ```
 
-This project is based on the [Talus Cookiecutter Data Science Template](https://github.com/TalusBio/cookiecutter-data-science)
+This project is based on the [Talus Cookiecutter Data Science
+Template](https://github.com/TalusBio/cookiecutter-data-science)
 
 ## Tips and Tricks
 
@@ -52,16 +41,25 @@ the `environment.yml`. From the root of your project, run:
 $ make env
 ```
 
-Then go ahead and activate your new environment
+This will install your conda environment directly into the root of the
+repository, in the `envs` directory. To go ahead and activate your new
+environment:
 
 ``` bash
-$ conda activate {{ cookiecutter.repo_name }}
+$ conda activate ./envs
+```
+
+**Tip:** Your shell prompt now likely shows the full path to your conda
+environment, which may be unwieldy. Update your conda config to hide this with:
+
+``` bash
+conda config --set env_prompt '({name})'
 ```
 
 ### The `src` directory works like a Python package!
 
 The default files we include allow the `src` directory to work like a Python
-package. If you've installed and activate you're environment above, then its
+package. If you've installed and activated your environment above, then its
 ready to go! You can now use the functions and classes defined in `src` within
 your Jupyter notebooks:
 

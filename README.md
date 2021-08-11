@@ -21,7 +21,10 @@ to serve as a guideline rather than a rule and you should feel free to modify
 it as needed for your specific project.
 
 This template was adapted from the [The Cookiecutter Data Science
-Project](http://drivendata.github.io/cookiecutter-data-science)
+Project](http://drivendata.github.io/cookiecutter-data-science). It is a hybrid
+of The Cookiecutter Data Science Project and Bill Noble's ["A Quick Guide to
+Organizing Computational Biology
+Projects"](https://doi.org/10.1371/journal.pcbi.1000424).
 
 ## Principles guiding this template
 
@@ -29,7 +32,6 @@ Although this template is flexible, there are a few principles that guide its
 design.
 
 ### Data is immutable
-
 The original data, whatever its form, is the starting point for all analyses
 and should never be modified. Furthermore, transformations and modifications
 that need to me made to the data should never be made manually and should never
@@ -46,23 +48,34 @@ tools are very effective for exploratory data analysis. However, these tools
 can be less effective for reproducing an analysis. Since notebooks are
 challenging objects for source control (e.g., diffs of the json are often not
 human-readable and merging is near impossible), we recommended not
-collaborating directly with others on Jupyter notebooks. There are three steps
-we recommend for using notebooks effectively:
-
+collaborating directly with others on Jupyter notebooks. We recommend these
+steps for using notebooks effectively:
+  
+- We like to use subdirectories to divide different types of analyses,
+  particularly for projects that take place over longer periods of time. We
+  recommend the format `<date>_<description>` for these directories (e.g.,
+  `2021-07-08_exporatory-analyses`). If multiple people are writing notebooks
+  in the same repository, we recommend an additional subdirectory specifying
+  specifying the GitHub username of the notebook authors. For instance, I may
+  have a notebook here:
+  ```
+  notebooks/wfondrie/2021-07-08_exploratory-analyses/1_visualizations.ipynb
+  ```
+  
 - Follow a naming convention that shows the owner and the order the analysis
-  was done in. We recommend the format `<step>_<ghuser>_<description>.ipynb`
-  (e.g., `0.3_wfondrie_visualize-distributions.ipynb`).
+  was done in. We recommend the format `<step>_<description>.ipynb`
+  (e.g., `0.3_visualize-distributions.ipynb`).
 
 - Refactor the good parts. Don't write code to do the same task in multiple
   notebooks. If it's a data preprocessing task, put it in the pipeline at
   `src/data/make_dataset.py` and load data from data/interim. If it's useful
-  utility code, refactor it to `src`.
+  utility code, refactor it to `src`. Also, don't be afraid to write useful
+  scripts alongside your notebooks.
   
-- We like to use subdirectories to divide different types of analyses,
-  particularly for projects that take place over longer periods of time. We
-  recommend the format `<date>_<ghuser>_<description>` for these directories
-  (e.g., `2021-07-08_wfondrie_exporatory-analyses`).
-
+- Jupyter notebooks are designed for literate programming, so take advantage!
+  Create markdown cells that describe the experiments contained within the
+  notebook and the different stages of analysis, as well as key results.
+  
 
 ### Data analysis is non-linear
 
@@ -130,33 +143,21 @@ will look like this:
 ├── LICENSE
 ├── Makefile           <- Makefile with commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
+├── data               <- The original, immutable data.
 ├── docs               <- Manuscript drafts, presentations, etc.
-│
-├── models             <- Trained and serialized models.
-│
 ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
 │                         the creator's GH username, and a short `-` delimited description, e.g.
 │                         `1.0-wfondrie-initial-data-exploration`.
-│
 ├── results            <- Generated analyses, such as figures and reports.
-│
 ├── environment.yml    <- Specifies the dependencies to build a conda environment.
 │                         Create the environment with `conda env create -f environment.yml`
-│
 ├── pyproject.toml     <- Specifies Python build tools and setttings (flake8, black, etc.)
-│
 ├── setup.cfg          <- Defines metadata about the project. 
-│
 ├── setup.py           <- Makes project pip installable (pip install -e .) so src can be imported
-│
-└── src                <- Source code for use in this project.
-    └── __init__.py    <- Makes src a Python module
+├── src                <- Source code for use in this project.
+│   └── __init__.py    <- Makes src a Python module
+└── .env               <- Define sensitive environment variables. This is intentionally 
+                          ignored by git by default. Do not commit this file!
 ```
 
 Feel free to modify these directories and files as best fits your needs. For
@@ -178,17 +179,25 @@ the `environment.yml`. From the root of your project, run:
 $ make env
 ```
 
-Then go ahead and activate your new environment, replacing `{project name}` 
-with the name of your project:
+This will install your conda environment directly into the root of the
+repository, in the `envs` directory. To go ahead and activate your new
+environment:
 
 ``` bash
-$ conda activate {project name}
+$ conda activate ./envs
+```
+
+**Tip:** Your shell prompt now likely shows the full path to your conda
+environment, which may be unwieldy. Update your conda config to hide this with:
+
+``` bash
+conda config --set env_prompt '({name})'
 ```
 
 ### The `src` directory works like a Python package!
 
 The default files we include allow the `src` directory to work like a Python
-package. If you've installed and activate you're environment above, then its
+package. If you've installed and activated your environment above, then its
 ready to go! You can now use the functions and classes defined in `src` within
 your Jupyter notebooks:
 

@@ -16,12 +16,12 @@ PYTHON_INTERPRETER = "python3"
 
 ## Install Dependencies
 env: environment.yml
-ifeq ($(conda env list | grep "${PROJECT_NAME})",)
+ifeq ($(conda env list | grep $(realpath ./envs))
 	conda env create -f environment.yml
-	@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
+	@echo ">>> New conda env created. Activate with:\nconda activate ./envs"
 else
-	conda env update -n ${PROJECT_NAME} -f environment.yml --prune
-	@echo ">>> Updated conda env. Activate with:\nconda activate $(PROJECT_NAME)"
+	conda env update -p ./envs -f environment.yml --prune
+	@echo ">>> Updated conda env. Activate with:\nconda activate ./envs"
 endif
 
 ## Delete all compiled Python files
