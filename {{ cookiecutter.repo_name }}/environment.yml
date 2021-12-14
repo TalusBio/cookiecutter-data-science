@@ -6,7 +6,7 @@ channels:
 
 dependencies:
   # For the template:
-  - python>=3.6
+  - python>=3.9
   - pip
   - click
   - awscli
@@ -22,4 +22,5 @@ dependencies:
   - matplotlib
   - seaborn
   - scikit-learn
+  - jupyterlab
 {% endif %}

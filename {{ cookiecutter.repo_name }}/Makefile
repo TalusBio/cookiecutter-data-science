@@ -16,8 +16,8 @@ PYTHON_INTERPRETER = "python3"
 
 ## Install Dependencies
 env: environment.yml
-ifeq ($(conda env list | grep $(realpath ./envs))
-	conda env create -f environment.yml
+ifeq (conda env list | grep "\W*$(realpath ./envs)",)
+	conda env create -p ./envs -f environment.yml
 	@echo ">>> New conda env created. Activate with:\nconda activate ./envs"
 else
 	conda env update -p ./envs -f environment.yml --prune
