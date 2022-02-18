@@ -1,3 +1,8 @@
+"""Check template creation.
+
+This is a slightly modified version of:
+https://github.com/drivendata/cookiecutter-data-science/blob/master/tests/test_creation.py
+"""
 import os
 import pytest
 from subprocess import check_output
@@ -29,7 +34,7 @@ def no_curlies(filepath):
 
 
 @pytest.mark.usefixtures("default_baked_project")
-class TestCookieSetup(object):
+class TestCookieSetup:
     def check(self, arg):
         args = ["python", "setup.py", "--" + str(arg)]
         with cwd(self.path):

@@ -1,0 +1,24 @@
+site_name: The Talus Bio Data Science Project Template
+repo_url: https://github.com/TalusBio/cookiecutter-talus-data-science
+nav:
+    - Principles: 'index.md'
+    - 'usage.md'
+    - 'tips.md'
+
+theme:
+  name: material
+  favicon: static/talus-logo.svg
+  logo: static/talus-logo.svg
+  font:
+    text: IBM Plex Sans
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - attr_list
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/talusbio
