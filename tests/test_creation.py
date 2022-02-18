@@ -82,7 +82,7 @@ class TestCookieSetup:
             assert p == "MIT"
 
     def test_environment(self):
-        reqs_path = self.path / "environment.yml"
+        reqs_path = self.path / "environment.yaml"
         assert reqs_path.exists()
         assert no_curlies(reqs_path)
 
