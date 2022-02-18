@@ -1,0 +1,9 @@
+:root {
+  --md-primary-fg-color:        #001425;
+  --md-primary-fg-color--light: #308AAD;
+  --md-primary-fg-color--dark:  #001425;
+}
+
+p a {
+    text-decoration: underline;
+}

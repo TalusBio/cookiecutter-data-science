@@ -1,3 +1,8 @@
+"""Create a project.
+
+This is a modified version of:
+https://github.com/drivendata/cookiecutter-data-science/blob/master/tests/conftest.py
+"""
 import sys
 import pytest
 import shutil
@@ -10,7 +15,10 @@ args = {
     "project_name": "TalusBio",
     "author_name": "Will",
     "open_source_license": "BSD-3-Clause",
-    "install_data_science_pkgs": "no",
+    "s3_bucket": "test-bucket",
+    "s3_folders": "test-folder-1 test-folder-2",
+    "s3_file_patters": "*.foo *.bar",
+    "aws_profile": "default",
 }
 
 
@@ -28,14 +36,16 @@ def default_baked_project(tmpdir_factory, request):
 
     pytest.param = request.param
     main.cookiecutter(
-        str(CCDS_ROOT), no_input=True, extra_context=pytest.param, output_dir=out_dir
+        str(CCDS_ROOT),
+        no_input=True,
+        extra_context=pytest.param,
+        output_dir=out_dir
     )
 
     pn = pytest.param.get("project_name") or "project_name"
 
     # project name gets converted to lower case on Linux but not Mac
     pn = system_check(pn)
-
     proj = out_dir / pn
     request.cls.path = proj
     yield

@@ -1,28 +1,29 @@
-.PHONY: clean data lint env sync_data_to_s3 sync_data_from_s3
+.PHONY: clean lint env sync run
 
 #################################################################################
 # GLOBALS                                                                       #
+# Modify these as needed.                                                       #
 #################################################################################
 
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUCKET = {{ cookiecutter.s3_bucket }}
+BUCKET_DIRS = {{ cookiecutter.s3_folders }}
+PATTERNS = {{ cookiecutter.s3_file_patterns }}
 PROFILE = {{ cookiecutter.aws_profile }}
 PROJECT_NAME = {{ cookiecutter.repo_name }}
+ENV_NAME = $(PROJECT_NAME)-env
 PYTHON_INTERPRETER = "python3"
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
-## Install Dependencies
+## Create or update your conda environment
 env: environment.yml
-ifeq (conda env list | grep "\W*$(realpath ./envs)",)
-	conda env create -p ./envs -f environment.yml
-	@echo ">>> New conda env created. Activate with:\nconda activate ./envs"
-else
-	conda env update -p ./envs -f environment.yml --prune
-	@echo ">>> Updated conda env. Activate with:\nconda activate ./envs"
-endif
+	conda env update -p ./$(ENV_NAME) -f environment.yaml --prune
+	@echo ""
+	@echo ">>> Activate your Conda Environment:\n    $ conda activate ./$(ENV_NAME)"
+	@echo ""
 
 ## Delete all compiled Python files
 clean:
@@ -33,28 +34,28 @@ clean:
 lint:
 	flake8 src
 
-## Upload Data to S3
-sync_data_to_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync data/ s3://$(BUCKET)/data/
-else
-	aws s3 sync data/ s3://$(BUCKET)/data/ --profile $(PROFILE)
-endif
-
-## Download Data from S3
-sync_data_from_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync s3://$(BUCKET)/data/ data/
-else
-	aws s3 sync s3://$(BUCKET)/data/ data/ --profile $(PROFILE)
-endif
+## Download data from AWS S3
+sync:
+	for pattern in ${PATTERNS}; do \
+		includes+=(--include "$${pattern}"); \
+	done; \
+	for folder in ${BUCKET_DIRS}; do \
+		mkdir -p data/$${folder}; \
+		aws s3 sync \
+			s3://${BUCKET}/$${folder} \
+			data/$${folder} \
+			--exclude "*" \
+			"$${includes[@]}"; \
+	done
 
 #################################################################################
 # PROJECT RULES                                                                 #
 # Here is where project specific Make targets should be defined.				#
 #################################################################################
 
-
+## Regenerate your analyses
+run:
+	@echo "Add the steps of your analysis to this rule."
 
 #################################################################################
 # Self Documenting Commands                                                     #

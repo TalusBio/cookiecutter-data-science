@@ -1,3 +1,47 @@
+############################
+# Data and Generated Files #
+############################
+data/
+figures/
+*-out/
+*-output/
+*_out/
+*_output/
+
+#########
+# MacOS #
+#########
+#This would normally be in the global, but often they are not.
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+##########
+# Python #
+##########
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -77,9 +121,6 @@ target/
 
 # exclude data from source control by default
 /data/
-
-# Mac OS-specific storage files
-.DS_Store
 
 # vim
 *.swp
