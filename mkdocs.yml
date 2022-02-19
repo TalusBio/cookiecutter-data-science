@@ -18,6 +18,11 @@ extra_css:
 markdown_extensions:
   - attr_list
   - smarty
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
 extra:
   social:
