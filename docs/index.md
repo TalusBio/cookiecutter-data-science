@@ -66,8 +66,8 @@ irreproducible analyses.
 Instead, all alterations should be made programmatically and these intermediate
 versions of the data can be saved alongside the original, if needed. Saving
 intermediate files is most useful for transformations that take a long time to
-perform. Otherwise, creating a reusable function to achieve the desired transformation
-is typically more desirable.
+perform. Otherwise, creating a reusable function to achieve the desired
+transformation is typically more desirable.
 
 All data should be stored in the `data` subdirectory, and it should not be
 version controlled (don't add it to your git repository). Git should only be
@@ -75,8 +75,8 @@ used to track only files that are hand-edited---data should not be---and it is
 often too large to work with in git effectively. Additionally, even when the
 data is small enough to feasibly manage in git, storing it in the repository
 creates another point of potential leakage for data we need to keep private: We
-don't want ours or a collaborator's data leaking because we accidently set a
-repository to public!
+don't want private data leaking because we accidently set a repository to
+public!
 
 When possible, data science projects should include a `sync` rule in their
 `Makefile`. This rule should download the data needed to run all of the
