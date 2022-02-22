@@ -8,7 +8,7 @@ Ideally every project should be reproducible---that is, anyone starting from
 the same data, code, and similar hardware should be able to obtain the same 
 results. 
 
-The goal of this template is to make our data science work at Talus
+The goal of this template is to make our data science work at Talus Bio
 reproducible and approachable. Using this template ensures that we organize
 code and data consistently across projects. This means when you join another
 project that is organized using this template, you will immediately know the
@@ -30,8 +30,7 @@ Projects"](https://doi.org/10.1371/journal.pcbi.1000424).
 
 ## Principles Guiding This Template
 
-Although this template is flexible, there are a few principles that guide its
-design.
+Although this template is flexible, these principles guide its design:
 
 ### Data Analysis is **Non-Linear**
 
@@ -45,7 +44,11 @@ So how can we make the final analysis reproducible? We like to use GNU `make`.
 The `make` utility is common on MacOS and Linux systems and describes the 
 dependency relationships between files. Given a `Makefile` (the file that 
 defines these relationships), we can verify that our analysis completes the
-same way from start to finish, every time.
+same way from start to finish, every time.[^1]
+
+[^1]: As your analyses grow, it may be beneficial to look at other tools, such
+    [Snakemake](https://snakemake.readthedocs.io/en/stable/), to orchestrate
+    your analyses.
 
 We recommend editing the `run` rule in your `Makefile` to run your analyses and
 create your final results in the `results` subdirectory. When this
@@ -69,36 +72,40 @@ intermediate files is most useful for transformations that take a long time to
 perform. Otherwise, creating a reusable function to achieve the desired
 transformation is typically more desirable.
 
-All data should be stored in the `data` subdirectory, and it should not be
+All data should be stored in the `data` subdirectory, and it should **not** be
 version controlled (don't add it to your git repository). Git should only be
 used to track only files that are hand-edited---data should not be---and it is
-often too large to work with in git effectively. Additionally, even when the
-data is small enough to feasibly manage in git, storing it in the repository
-creates another point of potential leakage for data we need to keep private: We
-don't want private data leaking because we accidently set a repository to
-public!
+often too large to work with in git effectively anyway. Additionally, even when
+the data is small enough to feasibly manage in git, storing it in the
+repository creates another point of potential leakage for data we need to keep
+private: We don't want private data leaking because we accidently set a
+repository to public!
 
 When possible, data science projects should include a `sync` rule in their
 `Makefile`. This rule should download the data needed to run all of the
-analyses that are part of the project. We have this rule configured
-to pull data from specified subdirectories of a specified Amazon Web Services
-(AWS) S3 bucket by default. However, this rule can be configured to pull 
-data from anywhere that your data is stored. For any project following these
+analyses that are part of the project. We have this rule configured to pull
+data from specified subdirectories of a specified Amazon Web Services (AWS) S3
+bucket by default. However, this rule can be configured to pull data from
+anywhere that your data is stored.[^2] For any project following these
 guidelines, you can syncronize your data directory with:
 
 ``` bash
 $ make sync
 ```
 
+[^2]: If you're using public mass spectrometry data from MassIVE or PRIDE,
+    consider using [ppx](https://ppx.readthedocs.io) to download the data
+    reproducibly.
+
 ### Notebooks are for **Exploration** and **Communication**
 
 Notebook packages like the Jupyter notebook and other literate programming
 tools are very effective for exploratory data analysis. However, these tools
 can be less effective for reproducing an analysis. Since notebooks are
-challenging objects for source control (e.g., diffs of the json are often not
+challenging objects for version control (e.g., diffs of the json are often not
 human-readable and merging is near impossible), we recommended not
-collaborating directly with others on Jupyter notebooks. We recommend these
-steps for using notebooks effectively:
+collaborating directly with others on the same Jupyter notebook. We recommend
+these steps for using notebooks effectively:
 
 - Jupyter notebooks are stored in the `notebooks` subdirectory. Typically we
   store notebooks in their final state, which makes them easy to share with
@@ -115,24 +122,27 @@ steps for using notebooks effectively:
   notebooks/wfondrie/2021-07-08_exploratory-analyses/1_visualizations.ipynb
   ```
   
-- Follow a naming convention that shows the owner and the order in which the
-  analysis was performed. We recommend the format `<step>_<description>.ipynb`
-  (e.g., `0.3_visualize-distributions.ipynb`).
+- Follow a naming convention that shows the order in which the analysis was
+  performed. We recommend the format `<step>_<description>.ipynb` (e.g.,
+  `0.3_visualize-distributions.ipynb`).
 
 - Refactor the good parts. Don't write code to do the same task in multiple
   notebooks. If it's a data preprocessing task, put it in the pipeline at
   `src/data/make_dataset.py` and load data from data/interim. If it's useful
   utility code, refactor it to `src`. Also, don't be afraid to write useful
-  scripts alongside your notebooks.
+  scripts alongside your notebooks. Finally, if you find yourself writing the
+  same code for multiple projects, consider writing a Python Package. See my
+  [cookiecutter
+  template](https://github.com/wfondrie/cookiecutter-python-package) for a good
+  starting point.
   
 - Jupyter notebooks are designed for literate programming, so take advantage!
   Create markdown cells that describe the experiments contained within the
   notebook and the different stages of analysis, as well as key results.
   
-- Be consistent with how you save results. I consistently store all of my
-  figures in a `figures` subdirectory alongside my notebooks. Additionally,
-  these should not be version controlled, unless there is a specific reason to
-  do so.
+- Be consistent with how you save results. I store all of my figures in a
+  `figures` subdirectory alongside my notebooks. Additionally, these should not
+  be version controlled, unless there is a specific reason to do so.
 
 ### **Reproducibility** Starts With the Environment
 
@@ -140,9 +150,10 @@ Our environment defines the tools, including their versions, that we need to
 complete our analyses. To manage your environment, we recommend using [the
 conda package manager](https://docs.conda.io/en/latest/). Why conda? Although
 largely thought of as a Python package manager, conda can download and install
-a wide variety of useful software in a reproducible manner. For example,
-EncyclopeDIA is available through the [bioconda
-channel](https://bioconda.github.io/).
+a wide variety of useful software in a reproducible manner. For example, one of
+the proteomics tools we routinely use is a Java program,
+[EncyclopeDIA](https://bitbucket.org/searleb/encyclopedia/wiki/Home), and
+available through the [bioconda channel](https://bioconda.github.io/).
 
 Once we know what software we need, we can complete the `environment.yaml` file,
 which will allow anyone to install the same software and reproduce our

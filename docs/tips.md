@@ -21,6 +21,9 @@ environment, which may be unwieldy. Update your conda config to hide this with:
 conda config --set env_prompt '({name})'
 ```
 
+If you discover that you need an additional tool, all you need to do is add it
+to your `environment.yaml` and run `make env` again.
+
 ## The `src` Directory Works Like a Python Package!
 
 The default files we include allow the `src` directory to work like a Python
@@ -35,6 +38,7 @@ your Jupyter notebooks:
 # OPTIONAL: always reload modules so that as you change code in src, it gets loaded
 %autoreload 2
 
+# Import your functions and classes from 'src'
 from src.data import make_dataset
 ```
 

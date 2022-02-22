@@ -1,6 +1,8 @@
 # How to Use This Template 
 
 ## 1. Install Dependencies
+
+To use this template, you'll need to install these dependencies:
  
  - Python 3.6+ - We recommend through
    [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
