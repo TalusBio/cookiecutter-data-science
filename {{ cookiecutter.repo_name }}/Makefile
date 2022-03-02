@@ -19,7 +19,7 @@ PYTHON_INTERPRETER = "python3"
 #################################################################################
 
 ## Create or update your conda environment
-env: environment.yml
+env: environment.yaml
 	conda env update -p ./$(ENV_NAME) -f environment.yaml --prune
 	@echo ""
 	@echo ">>> Activate your Conda Environment:\n    $ conda activate ./$(ENV_NAME)"
