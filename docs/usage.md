@@ -4,7 +4,7 @@
 
 To use this template, you'll need to install these dependencies:
  
- - Python 3.6+ - We recommend through
+ - Python 3.9+ - We recommend through
    [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
  - [Cookiecutter](http://cookiecutter.readthedocs.org/en/latest/installation.html) >=
    1.4.0
@@ -34,31 +34,29 @@ $ cookiecutter gh:TalusBio/cookiecutter-data-science
 After running the command you will be directed through a series of prompts to
 finish setting up your project. The directory structure of your new project
 will look like this:
+```
+├── Makefile                       <- Makefile with commands like `make data` or `make env`
+├── README.md                      <- The top-level README for developers using this project.
+├── data                           <- The original, immutable data.
+├── docs                           <- Manuscript drafts, presentations, etc.
+├── notebooks                      <- Jupyter notebooks and/or analysis scripts. 
+│   └── wfondrie                   <- Create a subdirectory with your username.
+│       └── 2022-11-01_my-analysis <- Create a dated subdirectory for each analysis.
+│           ├── notebook.ipynb     <- The analysis notebook or script.
+│           └── figures            <- A subdirectory to put the generated figures
+├── environment.yml                <- Specifies the dependencies to build a conda environment.
+│                                     Create the environment with `make env && conda activate ./envs`
+├── pyproject.toml                 <- Specifies Python configuration for our local Python package.
+├── src                            <- Source code for the local Python package to use in this project.
+│   └── __init__.py                <- Makes src a Python module
+└── .env                           <- Define sensitive environment variables. This is intentionally 
+                                      ignored by git by default. Do not commit this file!
+```
 
-```
-├── LICENSE
-├── Makefile           <- Makefile with commands like `make sync` or `make run`.
-├── README.md          <- The top-level README for developers using this project.
-├── data               <- The original, immutable data.
-├── docs               <- Manuscript drafts, presentations, etc.
-├── notebooks          <- Jupyter notebooks. See above for the naming convention.
-├── results            <- Generated analyses, such as figures and reports. 
-│                         Results should only be added to this directory using a
-│                         a GNU make rule.
-├── environment.yaml   <- Specifies the dependencies to build a conda environment.
-├── pyproject.toml     <- Specifies Python build tools and settings (flake8, black, etc.)
-├── setup.cfg          <- Defines metadata about the project. 
-├── setup.py           <- Makes project pip installable (pip install -e .) so src can 
-│                         be imported as a Python package.
-├── src                <- Source code for use in this project.
-│   └── __init__.py    <- Makes src a Python module.
-└── .env               <- Define sensitive environment variables. This is intentionally 
-                          ignored by git by default. Do not commit this file!
-```
 
 Feel free to modify these directories and files as best fits your needs. For
-example, if your project does not use Python, you may want to remove a few
-files: `pyproject.toml`, `setup.cfg`, `setup.py`, and `src/__init__.py`.
+example, if your project does not use Python, you may want to remove a couple
+files: `pyproject.toml` and `src/__init__.py`.
 
 
 ## 3. Customize and Do Cool Things

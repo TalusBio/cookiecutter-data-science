@@ -54,23 +54,3 @@ To enable Black, run from the root of your project:
 ``` bash
 $ pre-commit install
 ```
-
-## Create a Config File For Easy Project Creation
-
-It can be tedious to always have to type in your name, S3 bucket, and file
-patterns for every new project if they are almost always the same. One way
-to avoid this is to create a [user config file](https://cookiecutter.readthedocs.io/en/2.0.2/advanced/user_config.html). 
-For example, I created `~/dsproj.yaml` which looks like this:
-
-```yaml
-default_context:
-    author_name: "William E Fondrie"
-    open_source_license: "MIT"
-    s3_bucket: "data-pipeline-experiment-bucket"
-    s3_file_patterns: "*.peptides.txt *.proteins.txt *proteins.csv"
-```
-
-Then I use it when I create a project:
-```bash
-$ cookiecutter --config-file ~/dsproj.yaml gh:TalusBio/cookiecutter-data-science
-```

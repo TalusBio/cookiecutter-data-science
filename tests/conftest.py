@@ -14,11 +14,7 @@ CCDS_ROOT = Path(__file__).parents[1].resolve()
 args = {
     "project_name": "TalusBio",
     "author_name": "Will",
-    "open_source_license": "BSD-3-Clause",
-    "s3_bucket": "test-bucket",
-    "s3_folders": "test-folder-1 test-folder-2",
-    "s3_file_patters": "*.foo *.bar",
-    "aws_profile": "default",
+    "description": "blah",
 }
 
 

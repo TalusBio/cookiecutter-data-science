@@ -23,7 +23,7 @@ project (although there doesn't have to be). As such, this template is intended
 to serve as a guideline rather than a rule and you should feel free to modify
 it as needed for your specific project.
 
-This template was adapted from the [The Cookiecutter Data Science
+This template was inspired by the [The Cookiecutter Data Science
 Project](http://drivendata.github.io/cookiecutter-data-science) and Bill
 Noble's ["A Quick Guide to Organizing Computational Biology
 Projects"](https://doi.org/10.1371/journal.pcbi.1000424).
@@ -87,7 +87,7 @@ analyses that are part of the project. We have this rule configured to pull
 data from specified subdirectories of a specified Amazon Web Services (AWS) S3
 bucket by default. However, this rule can be configured to pull data from
 anywhere that your data is stored.[^2] For any project following these
-guidelines, you can syncronize your data directory with:
+guidelines, you can synchronize your data directory with:
 
 ``` bash
 $ make sync
@@ -128,7 +128,7 @@ these steps for using notebooks effectively:
 
 - Refactor the good parts. Don't write code to do the same task in multiple
   notebooks. If it's a data preprocessing task, put it in the pipeline at
-  `src/data/make_dataset.py` and load data from data/interim. If it's useful
+  `src/make_dataset.py` and load data from data/interim. If it's useful
   utility code, refactor it to `src`. Also, don't be afraid to write useful
   scripts alongside your notebooks. Finally, if you find yourself writing the
   same code for multiple projects, consider writing a Python Package. See my

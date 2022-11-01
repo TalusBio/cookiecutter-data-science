@@ -5,24 +5,22 @@
 ## Project Organization
 
 ```
-├── LICENSE
-├── Makefile           <- Makefile with commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data               <- The original, immutable data.
-├── docs               <- Manuscript drafts, presentations, etc.
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's GH username, and a short `-` delimited description, e.g.
-│                         `1.0-wfondrie-initial-data-exploration`.
-├── results            <- Generated analyses, such as figures and reports.
-├── environment.yml    <- Specifies the dependencies to build a conda environment.
-│                         Create the environment with `conda env create -f environment.yml`
-├── pyproject.toml     <- Specifies Python build tools and setttings (flake8, black, etc.)
-├── setup.cfg          <- Defines metadata about the project. 
-├── setup.py           <- Makes project pip installable (pip install -e .) so src can be imported
-├── src                <- Source code for use in this project.
-│   └── __init__.py    <- Makes src a Python module
-└── .env               <- Define sensitive environment variables. This is intentionally 
-                          ignored by git by default. Do not commit this file!
+├── Makefile                       <- Makefile with commands like `make data` or `make env`
+├── README.md                      <- The top-level README for developers using this project.
+├── data                           <- The original, immutable data.
+├── docs                           <- Manuscript drafts, presentations, etc.
+├── notebooks                      <- Jupyter notebooks and/or analysis scripts. 
+│   └── wfondrie                   <- Create a subdirectory with your username.
+│       └── 2022-11-01_my-analysis <- Create a dated subdirectory for each analysis.
+│           ├── notebook.ipynb     <- The analysis notebook or script.
+│           └── figures            <- A subdirectory to put the generated figures
+├── environment.yml                <- Specifies the dependencies to build a conda environment.
+│                                     Create the environment with `make env && conda activate ./envs`
+├── pyproject.toml                 <- Specifies Python configuration for our local Python package.
+├── src                            <- Source code for the local Python package to use in this project.
+│   └── __init__.py                <- Makes src a Python module
+└── .env                           <- Define sensitive environment variables. This is intentionally 
+                                      ignored by git by default. Do not commit this file!
 ```
 
 This project is based on the [Talus Cookiecutter Data Science

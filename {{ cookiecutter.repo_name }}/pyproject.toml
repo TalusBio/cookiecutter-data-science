@@ -1,13 +1,31 @@
+
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=61", "wheel", "setuptools_scm[toml]>=3.4"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "src"
+authors = [{name = "{{ cookiecutter.author_name }}"}]
+description = "{{ cookiecutter.description }}"
+requires-python = ">=3.9"
+dynamic = ["version"]
+
+[project.scripts]
+download = "src.data:download"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages]
+find = {namespaces = false}
+
+[tool.setuptools_scm]
 
 [tool.black]
 line-length = 79
 target-version = ['py37']
 include = '\.pyi?$'
 exclude = '''
-
 (
   /(
       \.eggs         # exclude a few common directories in the
