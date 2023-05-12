@@ -1,4 +1,5 @@
 .PHONY: clean lint env sync run
+CONDA := $(or $(which mamba),mamba,conda)
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -6,7 +7,7 @@
 
 ## Create or update your conda environment
 env: environment.yaml
-	conda env update -p ./envs -f environment.yaml --prune
+	$(CONDA) env update -p ./envs -f environment.yaml --prune
 	@echo
 	@echo ">>> Activate your Conda Environment:"
 	@echo "    $ conda activate ./envs"
@@ -17,13 +18,13 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Lint using flake8
+## Lint using ruff
 lint:
-	flake8 src
+	ruff src
 
-## Download data from AWS S3
+## Sync to your data source
 sync:
-	download
+	@echo "Add your data source to the makefile."
 
 #################################################################################
 # PROJECT RULES                                                                 #
