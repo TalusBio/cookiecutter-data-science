@@ -1,5 +1,6 @@
-.PHONY: clean lint env sync run
-CONDA := $(or $(which mamba),mamba,conda)
+.PHONY: clean lint sync run jupyter
+CONDA := $(or $(shell which mamba), conda)
+CONDA_ACTIVATE=source $$(${CONDA} info --base)/etc/profile.d/conda.sh ; ${CONDA} activate ; ${CONDA} activate
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -7,11 +8,15 @@ CONDA := $(or $(which mamba),mamba,conda)
 
 ## Create or update your conda environment
 env: environment.yaml
-	$(CONDA) env update -p ./envs -f environment.yaml --prune
+	$(CONDA) env update -p ./env -f environment.yaml --prune
 	@echo
 	@echo ">>> Activate your Conda Environment:"
-	@echo "    $ conda activate ./envs"
+	@echo "    $ conda activate ./env"
 	@echo
+
+## Start Jupyter Lab in the project environment
+jupyter: env
+	${CONDA_ACTIVATE} ./envs && cd notebooks && jupyter lab
 
 ## Delete all compiled Python files
 clean:
