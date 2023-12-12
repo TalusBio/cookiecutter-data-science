@@ -5,21 +5,45 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "src"
-authors = [{name = "{{ cookiecutter.author_name }}"}]
+authors = [{ name = "{{ cookiecutter.author_name }}" }]
 description = "{{ cookiecutter.description }}"
 requires-python = ">=3.10"
 dynamic = ["version"]
+equires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas",
+    "polars",
+    "scikit-learn",
+    "awswrangler",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=2.7.1",
+    "black",
+    "ruff",
+]
+plot = [
+    "matplotlib",
+    "seaborn",
+    "vizta",
+]
+notebooks = [
+    "ipykernel",
+]
+
 
 [tool.setuptools]
 include-package-data = false
 
 [tool.setuptools.packages]
-find = {namespaces = false}
+find = { namespaces = false }
 
 [tool.setuptools_scm]
 
 [tool.ruff]
-line-length = 88
+line-length = 79
 select = ["E", "F", "W", "C", "I", "D", "UP", "N", "ANN", "T20"]
 
 # ANN101 Missing type annotation for `self` in method
@@ -47,21 +71,4 @@ fix = true
 line-length = 79
 target-version = ['py310']
 include = '\.pyi?$'
-exclude = '''
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-  )/
-  | foo.py           # also separately exclude a file named foo.py in
-                     # the root of the project
-)
-'''
+# Black by default ignores files in .gitignore
